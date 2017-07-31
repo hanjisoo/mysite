@@ -1,5 +1,5 @@
 package com.javaex.controller;
- 
+
 import java.io.IOException;
 
 import javax.servlet.RequestDispatcher;
@@ -37,28 +37,51 @@ public class UserServlet extends HttpServlet {
 
 			// vo하나 만들어서 쟤네 다 넣어줄꺼야
 			UserVo vo = new UserVo(name, email, password, gender);
-			// dao에 넣어주고 
+			// dao에 넣어주고
 			UserDao dao = new UserDao();
 			dao.insert(vo);
 
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/joinsuccess.jsp");
 			rd.forward(request, response);
 
-		}else if("modifyform".equals(actionName)) {
-			//session에 있는 넘버 꺼내올꺼야
-			HttpSession session=request.getSession();
-			UserVo authUser=(UserVo)session.getAttribute("authUser");
-			int no=authUser.getNo();
+		} else if ("modify".equals(actionName)) {//vo에 g/s없어서 직접 set해줘
+			String name=request.getParameter("name");//요청에서 파라미터에있는 이름꺼내와//수정폼에서 이름맞나 확인해봐
+			String password=request.getParameter("password");	
+			String gender=request.getParameter("gender");
 			
-			UserDao dao=new UserDao();
-			UserVo userVo= dao.getUser(no);
-			/*System.out.println(userVo.toString());*/
+			UserVo vo=new UserVo();
+			vo.setName(name);
+			vo.setPassword(password);
+			vo.setGender(gender);
 			
-			request.setAttribute("userVo", userVo);
-			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/user/modifyform.jsp");
+			HttpSession session = request.getSession();//이 코드를 통해 세션에 접근할수 있어 로그인한 사용자의 넘버값빼올려고
+			UserVo authUser=(UserVo)session.getAttribute("authUser");//object로 다 나오게끔 형변환
+			int no = authUser.getNo();
+			vo.setNo(no);
+			
+			UserDao dao=new UserDao();//DB에 저장하려면 dao이용
+			dao.update(vo);
+			
+			authUser.setName(name);//세션에 이름바꿔줬어
+			
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/main/index.jsp");//사용자한테 화면 띄워줌
 			rd.forward(request, response);
-			
-		}else if ("loginform".equals(actionName)) {
+
+		} else if ("modifyform".equals(actionName)) {
+			// session에 있는 넘버 꺼내올꺼야
+			HttpSession session = request.getSession();
+			UserVo authUser = (UserVo) session.getAttribute("authUser");
+			int no = authUser.getNo();
+
+			UserDao dao = new UserDao();
+			UserVo userVo = dao.getUser(no);
+			/* System.out.println(userVo.toString()); */
+
+			request.setAttribute("userVo", userVo);
+			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/modifyform.jsp");
+			rd.forward(request, response);
+
+		} else if ("loginform".equals(actionName)) {
 			// 로그인폼
 			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/loginform.jsp");
 			rd.forward(request, response);
@@ -86,12 +109,13 @@ public class UserServlet extends HttpServlet {
 			}
 		} else if ("logout".equals(actionName)) {
 			HttpSession session = request.getSession();
-			session.removeAttribute("authUser");//세션제거
+			session.removeAttribute("authUser");// 세션제거
 			session.invalidate();
 			response.sendRedirect("/mysite/main");
 		} else {// 이상한 주소치면 메인으로 보내줄께
 			response.sendRedirect("/mysite/main");
 		}
+		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)

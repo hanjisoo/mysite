@@ -23,7 +23,7 @@
 			<div id="content">
 				<div id="user">
 	
-					<form id="join-form" name="joinForm" method="post" action="/mysite/user">
+					<form id="join-form" name="joinForm" method="get" action="/mysite/user">
 
 						
 						<label class="block-label" for="name">이름</label>
@@ -51,7 +51,8 @@
 							}
 							%>
 						</fieldset>
-						
+						//수정-주소뿌려줌
+						<input type="text" name="a" value="modify"/>
 						<input type="submit" value="수정완료">
 						
 					</form>

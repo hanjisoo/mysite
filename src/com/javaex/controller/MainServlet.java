@@ -18,7 +18,7 @@ public class MainServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8"); /*한글깨질까봐*/
 		
 		RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/main/index.jsp");
-		rd.forward(request, response);
+		rd.forward(request, response);//
 	}
 
 	
