@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <%@ page import="com.javaex.vo.UserVo"%>
 <%
 	UserVo userVo=(UserVo)request.getAttribute("userVo");
@@ -37,7 +39,18 @@
 						
 						<fieldset>
 							<legend>성별</legend>
-							<%
+							<c:choose>
+								<c:when test="${userVo.gender }">
+									<label>여</label> <input type="radio" name="gender" value="female" >
+									<label>남</label> <input type="radio" name="gender" value="male" checked="checked">
+								</c:when>
+								<c:otherwise>
+									<label>여</label> <input type="radio" name="gender" value="female" checked="checked" >
+									<label>남</label> <input type="radio" name="gender" value="male" >
+								</c:otherwise>
+							</c:choose>
+							
+							<%-- <%
 							if("male".equals(userVo.getGender())){
 							%>
 							<label>여</label> <input type="radio" name="gender" value="female" >
@@ -49,7 +62,7 @@
 							<label>남</label> <input type="radio" name="gender" value="male" >
 							<%
 							}
-							%>
+							%> --%>
 						</fieldset>
 						//수정-주소뿌려줌
 						<input type="text" name="a" value="modify"/>

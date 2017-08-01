@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%
 	String result=request.getParameter("result");
 %>
@@ -34,9 +35,14 @@
 						<label class="block-label">패스워드</label> 
 						<input name="password" type="password" value=""/>
 						
-						<% if("fail".equals(result)){ %>	
-								<P>로그인이 실패했습니다. 다시입력해주세요</P>
-						<%}	%>	
+						<!-- 그냥 result하면 안되고 param.을 해줘야함 -->
+						 <c:if test="${param.result=='fail'}">
+							<P>로그인이 실패했습니다. 다시입력해주세요</P>
+						</c:if>
+						
+						<%--  <% if("fail".equals(result)){ %>	
+							<P>로그인이 실패했습니다. 다시입력해주세요</P>
+						<%}	%>	 --%>
 	
 						<input type="submit" value="로그인">
 					</form>

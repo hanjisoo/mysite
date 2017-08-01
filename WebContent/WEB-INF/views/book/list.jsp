@@ -1,12 +1,16 @@
 ﻿
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
-<%@ page import="com.javaex.vo.GuestbookVo"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<% pageContext.setAttribute("n","\n"); %>
+
+<%-- <%@ page import="com.javaex.vo.GuestbookVo"%>
 <%@ page import="java.util.List"%>
 
 <%
 	List<GuestbookVo> list = (List<GuestbookVo>) request.getAttribute("list");
 	
-%>
+%> --%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -19,11 +23,11 @@
 
 	<div id="container">
 
-		<jsp:include page="/WEB-INF/views/includes/header.jsp"></jsp:include>
+		<%-- <jsp:include page="/WEB-INF/views/includes/header.jsp"></jsp:include> --%>
+		<c:import url="/WEB-INF/views/includes/header.jsp"></c:import>
 
-
-		<jsp:include page="/WEB-INF/views/includes/navigation.jsp"></jsp:include>
-
+		<%-- <jsp:include page="/WEB-INF/views/includes/navigation.jsp"></jsp:include> --%>
+		<c:import url="/WEB-INF/views/includes/navigation.jsp"></c:import>
 
 	<div id="wrapper">
 			<div id="content">
@@ -48,7 +52,24 @@
 					</form>
 					<br />
 
-					<%
+					<c:forEach items="${list}" var="vo">
+						<table width="510" border="1">
+						<tr>
+							<td>${vo.no}</td>
+							<td>${vo.name}</td>
+							<td>${vo.regDate}</td>
+							<td><a href="gb?a=deleteform&no=${vo.no}">삭제</a></td>
+						</tr>
+						
+						<tr>
+							<td colspan=4>안녕하세요~<br />${fn:replace(vo.content,n,'<br/>')}</td>
+														<%-- ${vo.content} --%>
+						</tr>
+					</table>
+					<br />
+					</c:forEach>
+					
+			  <%-- <%
 						for (GuestbookVo vo : list) {
 							//insert  리스트에서 하나씩 돌아 dao에 getlist씀
 					%>
@@ -68,22 +89,18 @@
 					<br />
 					<%
 						}
-					%>
+					%> --%>
 
-				</div>
-				<!-- /user -->
-			</div>
-			<!-- /content -->
-		</div>
-		<!-- /wrapper -->
+				</div>	<!-- /user -->
+			</div>	<!-- /content -->
+		</div>	<!-- /wrapper -->
 	
 
 
-		<jsp:include page="/WEB-INF/views/includes/footer.jsp"></jsp:include>
-
-
-	</div>
-	<!-- /container -->
+		<%-- <jsp:include page="/WEB-INF/views/includes/footer.jsp"></jsp:include> --%>
+		<c:import url="/WEB-INF/views/includes/footer.jsp"></c:import>
+		
+	</div>	<!-- /container -->
 
 
 </body>
