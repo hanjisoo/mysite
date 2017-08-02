@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.javaex.dao.UserDao;
+import com.javaex.utill.WebUtil;
 import com.javaex.vo.UserVo;
 
 @WebServlet("/user")
@@ -23,9 +24,10 @@ public class UserServlet extends HttpServlet {
 
 		String actionName = request.getParameter("a");
 		if ("joinform".equals(actionName)) {
-
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/joinform.jsp");
-			rd.forward(request, response);
+			
+			WebUtil.forward(request, response, "/WEB-INF/views/user/joinform.jsp");
+			/*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/joinform.jsp");
+			rd.forward(request, response);*/
 
 		} else if ("join".equals(actionName)) {
 			// 회원정보저장->성공페이지
@@ -41,8 +43,9 @@ public class UserServlet extends HttpServlet {
 			UserDao dao = new UserDao();
 			dao.insert(vo);
 
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/joinsuccess.jsp");
-			rd.forward(request, response);
+			WebUtil.forward(request, response, "/WEB-INF/views/user/joinsuccess.jsp");
+			/*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/joinsuccess.jsp");
+			rd.forward(request, response);*/
 
 		} else if ("modify".equals(actionName)) {//vo에 g/s없어서 직접 set해줘
 			String name=request.getParameter("name");//요청에서 파라미터에있는 이름꺼내와//수정폼에서 이름맞나 확인해봐
@@ -64,8 +67,9 @@ public class UserServlet extends HttpServlet {
 			
 			authUser.setName(name);//세션에 이름바꿔줬어
 			
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/main/index.jsp");//사용자한테 화면 띄워줌
-			rd.forward(request, response);
+			WebUtil.forward(request, response, "/WEB-INF/views/main/index.jsp");
+			/*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/main/index.jsp");//사용자한테 화면 띄워줌
+			rd.forward(request, response);*/
 
 		} else if ("modifyform".equals(actionName)) {
 			// session에 있는 넘버 꺼내올꺼야
@@ -78,8 +82,10 @@ public class UserServlet extends HttpServlet {
 			/* System.out.println(userVo.toString()); */
 
 			request.setAttribute("userVo", userVo);
-			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/modifyform.jsp");
-			rd.forward(request, response);
+			
+			WebUtil.forward(request, response, "/WEB-INF/views/user/modifyform.jsp");
+			/*RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/views/user/modifyform.jsp");
+			rd.forward(request, response);*/
 
 		} else if ("loginform".equals(actionName)) {
 			// 로그인폼
@@ -104,8 +110,9 @@ public class UserServlet extends HttpServlet {
 				// 세션에 담아놔 별명이랑 no와 비번이 들어있는 vo넘겨줘 아래데이터들어있으면 로그인 성공한걸로 치고 반복해서 안물어봄
 				session.setAttribute("authUser", vo);
 
-				response.sendRedirect("/mysite/main");// main띄워
-				return;// 여기서 끝 이거안써주면 아래남아있는 코드들 실행될수도 있어서
+				WebUtil.redirect(request, response, "/mysite/main");
+				/*response.sendRedirect("/mysite/main");// main띄워
+*/				return;// 여기서 끝 이거안써주면 아래남아있는 코드들 실행될수도 있어서
 			}
 		} else if ("logout".equals(actionName)) {
 			HttpSession session = request.getSession();
@@ -113,7 +120,9 @@ public class UserServlet extends HttpServlet {
 			session.invalidate();
 			response.sendRedirect("/mysite/main");
 		} else {// 이상한 주소치면 메인으로 보내줄께
-			response.sendRedirect("/mysite/main");
+			
+			WebUtil.redirect(request, response, ".mysite/main");
+			/*response.sendRedirect("/mysite/main");*/
 		}
 		
 	}

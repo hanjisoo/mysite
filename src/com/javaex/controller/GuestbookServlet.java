@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaex.dao.GuestbookDao;
+import com.javaex.utill.WebUtil;
 import com.javaex.vo.GuestbookVo;
 
 
@@ -35,7 +36,9 @@ public class GuestbookServlet extends HttpServlet {
 			GuestbookDao bookdao =new GuestbookDao();
 			bookdao.insert(vo);
 			
-			response.sendRedirect("/mysite/gb");
+			
+			WebUtil.redirect(request, response, "/mysite/gb");
+			/*response.sendRedirect("/mysite/gb");*/
 			
 			
 		}else if("delete".equals(actionName)) {
@@ -49,15 +52,16 @@ public class GuestbookServlet extends HttpServlet {
 			GuestbookDao bookdao =new GuestbookDao();
 			bookdao.delete(vo);
 			
-			
-			response.sendRedirect("/mysite/gb");
+			WebUtil.redirect(request, response, "/mysite/gb");
+			/*response.sendRedirect("/mysite/gb");*/
 			
 			
 		}else if("deleteform".equals(actionName)) {
 			System.out.println("삭제형식");
 			
-			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/book/deleteform.jsp");
-			rd.forward(request, response);
+			WebUtil.forward(request, response, "/WEB-INF/views/book/deleteform.jsp");
+			/*RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/book/deleteform.jsp");
+			rd.forward(request, response);*/
 			
 			
 			
@@ -70,8 +74,9 @@ public class GuestbookServlet extends HttpServlet {
 			System.out.println(list.toString());
 			request.setAttribute("list", list);
 							
-			RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/book/list.jsp");
-			rd.forward(request, response);
+			WebUtil.forward(request, response, "/WEB-INF/views/book/list.jsp");
+			/*RequestDispatcher rd=request.getRequestDispatcher("/WEB-INF/views/book/list.jsp");
+			rd.forward(request, response);*/
 			
 		}
 	}

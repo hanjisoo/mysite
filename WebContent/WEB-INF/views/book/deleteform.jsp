@@ -25,7 +25,7 @@
 				<div id="user">
 
 					<form method="post" action="/mysite/gb">
-						<input type='text' name="no" value="<%=no%>">
+						<input type='text' name="no" value="${param.no }">
 						<!--hidden으로 숨겨줌 숫자보여주고 우리눈에 -->
 						<input type="text" name="a" value="delete">
 						<!-- 리스트에 리퉤스트에 담아진 a의 delete로 가 -->

@@ -35,8 +35,10 @@
 						<label class="block-label">패스워드</label> 
 						<input name="password" type="password" value=""/>
 						
+						
+							<!-- ${sessionScope.authUser==null} 이렇게 쓰면 맨처음 로그인페이지에 실패문구가 뜨지 로그인안된상태가 null이니깐 -->
 						<!-- 그냥 result하면 안되고 param.을 해줘야함 -->
-						 <c:if test="${param.result=='fail'}">
+						<c:if test="${param.result=='fail'}">
 							<P>로그인이 실패했습니다. 다시입력해주세요</P>
 						</c:if>
 						
@@ -45,6 +47,7 @@
 						<%}	%>	 --%>
 	
 						<input type="submit" value="로그인">
+					
 					</form>
 					
 				</div><!-- /user -->
