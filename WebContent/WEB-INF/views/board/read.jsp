@@ -38,6 +38,7 @@
 				</table>
 				<div class="bottom">
 					<a href="/mysite/bo">글목록</a>
+					
 					<c:if test="${authUser.no==bovo.userNo }">
 					<a href="/mysite/bo?a=modifyform&no=${bovo.no }">글수정</a>
 					</c:if>

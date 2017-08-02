@@ -40,7 +40,7 @@
 					<tr>
 						<td>${vo.no }</td>
 						
-						<td><a href="bo?a=read&no=${vo.no }">${vo.no }번째 글입니다.</a></td>
+						<td><a href="bo?a=read&no=${vo.no }">${vo.title }.</a></td>
 						<td>${vo.name }</td>
 						<td>${vo.hit }</td>
 						<td>${vo.regDate } , ${authUser.no},${vo.userNo}</td>
